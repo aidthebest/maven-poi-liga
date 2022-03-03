@@ -10,24 +10,6 @@ import java.util.Scanner;
 
 public class Store {
     public static void main(String[] args) throws FileNotFoundException {
-        Workbook storeBook = new XSSFWorkbook();
-        FileOutputStream exelDoc = new FileOutputStream(new File("./sss.xls"));
-
-        Sheet sheet = storeBook.createSheet("itemsS");
-        Row row = sheet.createRow(4);
-        Cell items = row.createCell(3);
-        items.setCellValue("11111111111");
-
-        try {
-            storeBook.write(exelDoc);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            exelDoc.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         String[] store = new String[10];
 
@@ -41,14 +23,14 @@ public class Store {
                 System.out.println("Кладём новый товар, укажите название");
                 String item = scanner.nextLine();
                 for (int i = 0; i < store.length; i++) {
-                    if (store[i] == null || store[i].isEmpty()){
+                    if (store[i] == null || store[i].isEmpty()) {
                         store[i] = item;
                         System.out.println("Товар " + item + " успешно доваблен на склад");
                         break;
 
+                    } else if (store[i] != null) {
+                        System.out.println("Склад переполнен");
                     }
-                    else if (store[i] != null) {System.out.println("Склад переполнен");
-                    };
 
                 }
             }
@@ -89,11 +71,36 @@ public class Store {
                 int count = 0;
                 for (int i = 0; i < store.length; i++) {
                     if (store[i] != null) {
-                        count = count+1;
+                        count = count + 1;
                     }
 
                 }
                 System.out.println("На складе " + count + " позиций");
+            }
+
+            if (command.equals("toEx")) {
+                Workbook storeBook = new XSSFWorkbook();
+                FileOutputStream exelDoc = new FileOutputStream(new File("./sss.xlsx"));
+                Sheet sheet = storeBook.createSheet("itemsS");
+                for (int i = 0; i < store.length; i++) {
+                    if (store[i] != null) {
+                        for (int p = 0; p < store.length; p++) {
+                            Row rowI = sheet.createRow(0);
+                            Cell item = rowI.createCell(0);
+                            item.setCellValue(store[i]);
+                        }
+                    }
+                }
+                try {
+                    storeBook.write(exelDoc);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    exelDoc.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
 
@@ -104,3 +111,4 @@ public class Store {
         }
     }
 }
+
