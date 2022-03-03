@@ -84,11 +84,9 @@ public class Store {
                 Sheet sheet = storeBook.createSheet("itemsS");
                 for (int i = 0; i < store.length; i++) {
                     if (store[i] != null) {
-                        for (int p = 0; p < store.length; p++) {
-                            Row rowI = sheet.createRow(0);
+                            Row rowI = sheet.createRow(i);
                             Cell item = rowI.createCell(0);
                             item.setCellValue(store[i]);
-                        }
                     }
                 }
                 try {
